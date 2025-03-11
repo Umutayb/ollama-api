@@ -1,13 +1,13 @@
-# ContextStore
+# ollama API
 
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.umutayb/context-store?color=brightgreen&label=ContextStore)](https://mvnrepository.com/artifact/io.github.umutayb/context-store/latest)
 
 ## Overview
 
-ContextStore provides utility classes for managing thread-safe context storage and property handling. It includes the following key components:
+ollama API provides utility classes for managing thread-safe ollama storage and property handling. It includes the following key components:
 
-1. **`ContextStore`**: A thread-safe context storage solution using `ThreadLocal` and `ConcurrentHashMap`.
+1. **`ContextStore`**: A thread-safe ollama storage solution using `ThreadLocal` and `ConcurrentHashMap`.
 2. **`PropertiesReader`**: A simple wrapper for loading and accessing properties from a file.
 3. **`PropertyUtilities`**: A utility class for loading and manipulating properties from multiple sources (files, environment, system).
 4. **`UtilityPropertiesMap`**: A custom implementation of `AbstractMap` for flexible property handling.
@@ -38,7 +38,7 @@ To use Context Store in your Maven project, add the following dependency to your
 ```xml
 <dependency>
     <groupId>io.github.umutayb</groupId>
-    <artifactId>context-store</artifactId>
+    <artifactId>ollama-store</artifactId>
     <version>1.x.x</version>
 </dependency>
 ```
@@ -64,7 +64,7 @@ A thread-safe store for key-value pairs, designed for concurrent applications.
 #### Key Methods:
 
 - **`put(K key, V value)`**  
-  Associates the specified value with the specified key in the current thread's context.
+  Associates the specified value with the specified key in the current thread's ollama.
 
 - **`get(K key)`**  
   Retrieves the value associated with the given key.
@@ -76,7 +76,7 @@ A thread-safe store for key-value pairs, designed for concurrent applications.
   Removes the entry for the given key.
 
 - **`clear()`**  
-  Clears all entries in the current thread's context.
+  Clears all entries in the current thread's ollama.
 
 - **`items()`**  
   Returns an unmodifiable set of all keys.
@@ -88,10 +88,10 @@ A thread-safe store for key-value pairs, designed for concurrent applications.
   Updates the value for an existing key.
 
 - **`merge(Map... maps)`**  
-  Merges entries from multiple maps into the context.
+  Merges entries from multiple maps into the ollama.
 
 - **`loadProperties(String... propertyNames)`**  
-  Loads properties from specified files and merges them into the context.
+  Loads properties from specified files and merges them into the ollama.
 
 ---
 

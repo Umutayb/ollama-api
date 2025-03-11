@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.umutayb</groupId>
-  <artifactId>context-store</artifactId>
-  <version>1.0.0</version>
+  <artifactId>ollama-api</artifactId>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
-  <name>Context Store</name>
-  <description>Context Store is a reliable context storage solution where values can be stored, updated and accessed on the same thread!</description>
-  <url>https://github.com/Umutayb/context-store</url>
+  <name>Ollama Api</name>
+  <description>Ollama API is a small set of utilities to make integrating LLM's into your Java projects easy.</description>
+  <url>https://github.com/Umutayb/ollama-api</url>
 
   <licenses>
     <license>
@@ -20,7 +20,7 @@
   </licenses>
 
   <properties>
-    <buildDirectory>${project.basedir}/out/artifacts/context-store_jar</buildDirectory>
+    <buildDirectory>${project.basedir}/out/artifacts/ollama-store_jar</buildDirectory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.version>3.8.0</maven.compiler.version>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -74,12 +74,19 @@
       <version>24.0.0</version>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Utilities -->
+    <dependency>
+      <groupId>io.github.umutayb</groupId>
+      <artifactId>Utilities</artifactId>
+      <version>1.7.2-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <scm>
-    <connection>scm:git:git://github.com/Umutayb/context-store.git</connection>
-    <developerConnection>scm:git:ssh://github.com/Umutayb/context-store.git</developerConnection>
-    <url>https://github.com/Umutayb/Umutayb/context-store</url>
+    <connection>scm:git:git://github.com/Umutayb/ollama-api.git</connection>
+    <developerConnection>scm:git:ssh://github.com/Umutayb/ollama-api.git</developerConnection>
+    <url>https://github.com/Umutayb/Umutayb/ollama-api</url>
   </scm>
 
   <build>
