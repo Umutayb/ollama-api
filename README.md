@@ -1,5 +1,7 @@
 # Ollama API
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.umutayb/ollama-api?color=brightgreen&label=OllamaAPI)](https://mvnrepository.com/artifact/io.github.umutayb/ollama-api/latest)
+
 ## Overview
 Ollama API is a small set of utilities to make integrating LLM's (via ollama) into your Java projects easy.
 
