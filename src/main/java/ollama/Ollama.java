@@ -16,11 +16,23 @@ import ollama.models.ResponseModel;
 import static utils.MappingUtilities.Json.Schema.generateSchema;
 import static utils.MappingUtilities.Json.mapper;
 
+/**
+ * The Ollama class provides API utilities for interacting with an external service.
+ * It facilitates API communication, request handling, and JSON schema generation.
+ */
 public class Ollama extends ApiUtilities {
 
+    /**
+     * Service interface for making API calls.
+     */
     OllamaServices ollamaServices;
 
-    public Ollama(String baseUrl){
+    /**
+     * Constructs an instance of Ollama with a specified base URL.
+     *
+     * @param baseUrl The base URL of the API service.
+     */
+    public Ollama(String baseUrl) {
         ollamaServices = new ServiceGenerator()
                 .setBASE_URL(baseUrl)
                 .setReadTimeout(1200)
@@ -28,12 +40,28 @@ public class Ollama extends ApiUtilities {
                 .generate(OllamaServices.class);
     }
 
-    public ResponseModel inference(PromptModel message){
+    /**
+     * Sends an inference request with a given message.
+     *
+     * @param message The prompt message model.
+     * @return A ResponseModel containing the API response.
+     */
+    public ResponseModel inference(PromptModel message) {
         log.info("Messaging " + message.getModel() + ".");
         Call<ResponseModel> messageCall = ollamaServices.postMessage(message);
         return perform(messageCall, true, false, Response.class);
     }
 
+    /**
+     * Sends an inference request and maps the response to a specified type.
+     *
+     * @param message       The prompt message model.
+     * @param responseType  The class type to map the response to.
+     * @param requiredFields Optional required fields for JSON schema generation.
+     * @param <ResponseType> The generic response type.
+     * @return The API response mapped to the specified type.
+     * @throws JsonProcessingException If an error occurs during JSON processing.
+     */
     public <ResponseType> ResponseType inference(
             PromptModel message,
             Class<ResponseType> responseType,
@@ -47,13 +75,11 @@ public class Ollama extends ApiUtilities {
     }
 
     /**
-     * Generates a JSON schema for the given class, with the option to specify required fields.
-     * This method uses the Jackson library to generate the schema and customize it based on the provided required fields.
-     * It sets the ID of the schema and its nested schemas to null and adds the required fields to the schema's "required" property.
+     * Generates a JSON schema for the given class, with optional required fields.
      *
      * @param clazz The class for which the JSON schema should be generated.
-     * @param requiredFields A varargs array of field names that should be marked as "required" in the schema.
-     * @return A JsonNode representing the generated schema, or null if an exception occurs during generation.
+     * @param requiredFields A varargs array of field names to mark as "required".
+     * @return A JsonNode representing the generated schema.
      */
     public static JsonNode getSchema(Class<?> clazz, String... requiredFields) {
         JsonSchema schema = generateSchema(clazz);
@@ -63,12 +89,11 @@ public class Ollama extends ApiUtilities {
     }
 
     /**
-     * Adds the specified required fields to the "required" property of a JSON schema.
-     * This method adds each field name from the provided array to the "required" property of the schema.
+     * Adds required fields to the "required" property of a JSON schema.
      *
-     * @param schema         The JSON schema to modify.
-     * @param requiredFields An array of field names that should be marked as required in the schema.
-     * @return
+     * @param schema The JSON schema to modify.
+     * @param requiredFields An array of field names to mark as required.
+     * @return The modified JSON schema as a JsonNode.
      */
     private static JsonNode addRequiredFields(JsonSchema schema, String[] requiredFields) {
         JsonNode schemaNode = mapper.valueToTree(schema);
@@ -83,7 +108,6 @@ public class Ollama extends ApiUtilities {
             required.add(fieldName);
         }
 
-        // Convert the modified JsonNode back to JsonSchema
         return mapper.valueToTree(root);
     }
 }
