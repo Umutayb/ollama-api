@@ -35,9 +35,9 @@ Ollama ollama = new Ollama("http://localhost:11435/");
 
 ### Perform API Inference
 ```java
-PromptModel prompt = new PromptModel();
+Prompt prompt = new Prompt();
 prompt.setModel("qwen2.5:32b");
-ResponseModel response = ollama.inference(prompt);
+OllamaResponse response = ollama.inference(prompt);
 System.out.println(response.getResponse());
 ```
 

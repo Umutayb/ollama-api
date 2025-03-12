@@ -5,7 +5,7 @@
 
   <groupId>io.github.umutayb</groupId>
   <artifactId>ollama-api</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
 
   <name>Ollama Api</name>
@@ -25,6 +25,7 @@
     <maven.compiler.version>3.8.0</maven.compiler.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <java.utility.version>1.7.3</java.utility.version>
     <java.version>17</java.version>
   </properties>
 
@@ -79,7 +80,7 @@
     <dependency>
       <groupId>io.github.umutayb</groupId>
       <artifactId>Utilities</artifactId>
-      <version>1.7.2</version>
+      <version>${java.utility.version}</version>
     </dependency>
   </dependencies>
 
