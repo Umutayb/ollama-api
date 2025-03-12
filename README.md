@@ -1,201 +1,73 @@
-# ollama API
-
-
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.umutayb/context-store?color=brightgreen&label=ContextStore)](https://mvnrepository.com/artifact/io.github.umutayb/context-store/latest)
+# Ollama API
 
 ## Overview
+Ollama API is a small set of utilities to make integrating LLM's (via ollama) into your Java projects easy.
 
-ollama API provides utility classes for managing thread-safe ollama storage and property handling. It includes the following key components:
-
-1. **`ContextStore`**: A thread-safe ollama storage solution using `ThreadLocal` and `ConcurrentHashMap`.
-2. **`PropertiesReader`**: A simple wrapper for loading and accessing properties from a file.
-3. **`PropertyUtilities`**: A utility class for loading and manipulating properties from multiple sources (files, environment, system).
-4. **`UtilityPropertiesMap`**: A custom implementation of `AbstractMap` for flexible property handling.
-
----
-
-## Table of Contents
-
-- [Getting Started](#getting-started)
-- [Classes and Methods](#classes-and-methods)
-    - [ContextStore](#contextstore)
-    - [PropertiesReader](#propertiesreader)
-    - [PropertyUtilities](#propertyutilities)
-    - [UtilityPropertiesMap](#utilitypropertiesmap)
-- [Examples](#examples)
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Java 8 or later
+## Features
+- API request handling with **Retrofit**.
+- JSON schema generation using **Jackson**.
+- Customizable request formatting and logging.
+- Seamless mapping of JSON responses to Java objects.
+- Automatic JSON schema generation to format LLM responses for seamless integration of LLMs into Java projects.
 
 ### Installation
 
-To use Context Store in your Maven project, add the following dependency to your pom.xml file:
+Include the required dependencies in your project:
 ```xml
-<dependency>
-    <groupId>io.github.umutayb</groupId>
-    <artifactId>ollama-store</artifactId>
-    <version>1.x.x</version>
-</dependency>
+<dependencies>
+    <!-- Ollama API -->
+    <dependency>
+        <groupId>io.github.umutayb</groupId>
+        <artifactId>ollama-api</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+</dependencies>
 ```
-After updating your project, the quickstart library is ready to use.
 
-### ContextStore Usage
+## Usage
 
+### Initialize Ollama class
 ```java
-ContextStore.put("key1", "value1");
-String value = ContextStore.get("key1"); // "value1"
+Ollama ollama = new Ollama("https://api.example.com");
 ```
 
+### Perform API Inference
 ```java
-String value = ContextStore.get("key1", "default"); // "returns 'default' if the key doesn't exist"
+PromptModel prompt = new PromptModel();
+prompt.setModel("example-model");
+ResponseModel response = ollama.inference(prompt);
+System.out.println(response.getResponse());
 ```
 
-## Classes and Methods
-
-### ContextStore
-
-A thread-safe store for key-value pairs, designed for concurrent applications.
-
-#### Key Methods:
-
-- **`put(K key, V value)`**  
-  Associates the specified value with the specified key in the current thread's ollama.
-
-- **`get(K key)`**  
-  Retrieves the value associated with the given key.
-
-- **`get(K key, V defaultValue)`**  
-  Retrieves the value for the given key or returns the default value.
-
-- **`remove(K key)`**  
-  Removes the entry for the given key.
-
-- **`clear()`**  
-  Clears all entries in the current thread's ollama.
-
-- **`items()`**  
-  Returns an unmodifiable set of all keys.
-
-- **`has(K key)`**  
-  Checks if a key exists.
-
-- **`update(K key, V value)`**  
-  Updates the value for an existing key.
-
-- **`merge(Map... maps)`**  
-  Merges entries from multiple maps into the ollama.
-
-- **`loadProperties(String... propertyNames)`**  
-  Loads properties from specified files and merges them into the ollama.
-
----
-
-### PropertiesReader
-
-Loads and retrieves properties from a specified file.
-
-#### Key Methods:
-
-- **`PropertiesReader(String propertyFileName)`**  
-  Constructor to initialize with a property file.
-
-- **`getProperty(String propertyName)`**  
-  Retrieves the value of the specified property.
-
----
-
-### PropertyUtilities
-
-Utility functions for managing properties from files, environment variables, and system properties.
-
-#### Key Methods:
-
-- **`loadPropertyFile(String propertyFileName)`**  
-  Loads a properties file.
-
-- **`getProperty(String key)`**  
-  Retrieves a property by its key.
-
-- **`getProperty(String key, String defaultValue)`**  
-  Retrieves a property or returns the default value.
-
-- **`fromPropertyFile(String propertyFileName)`**  
-  Converts properties from a file into a map.
-
-- **`getProperties(String... propertyNames)`**  
-  Retrieves properties from multiple files and merges them.
-
-- **`fromEnvironment()`**  
-  Loads properties from environment variables.
-
-- **`fromSystemProperties()`**  
-  Loads properties from system properties.
-
----
-
-### UtilityPropertiesMap
-
-A flexible map implementation for property handling.
-
-#### Key Features:
-
-- Inherits from `AbstractMap`.
-- Supports formatting of keys (case-insensitive, special character normalization).
-- Allows cascading lookup with parent maps.
-
-#### Key Methods:
-
-- **`create(Properties p)`**  
-  Creates a `UtilityPropertiesMap` from a `Properties` object.
-
-- **`formatKey(String key)`**  
-  Formats keys to handle variations in case and special characters.
-
----
-
-## Examples
-
-### ContextStore Usage
-
+### Custom Response Mapping
 ```java
-ContextStore.put("key1", "value1");
-String value = ContextStore.get("key1"); // "value1"
+MyResponseType customResponse = ollama.inference(prompt, MyResponseType.class, "field1", "field2");
 ```
 
+### Generate JSON Schema
 ```java
-String value = ContextStore.get("key1", "default"); // "returns 'default' if the key doesn't exist"
+JsonNode schema = Ollama.getSchema(MyClass.class, "requiredField1", "requiredField2");
+System.out.println(schema.toPrettyString());
 ```
 
-### Loading Properties with PropertiesReader
+## JSON Schema for LLM Integration
+Ollama provides **automatic JSON schema generation** to structure responses from Large Language Models (LLMs). This ensures that responses conform to expected formats, making integration of LLMs into Java projects seamless.
 
+### How It Works
+- The library dynamically generates a **JSON schema** for any given Java class.
+- Developers can specify **required fields** to enforce structured responses.
+- The schema is used to **format LLM responses**, ensuring they map directly to Java objects.
+
+### Example:
 ```java
-PropertiesReader reader = new PropertiesReader("config.properties");
-String value = reader.getProperty("someKey");
+JsonNode schema = Ollama.getSchema(MyClass.class, "name", "age");
+System.out.println(schema.toPrettyString());
 ```
-
-### PropertyUtilities for Property Management
-
-```java
-PropertyUtilities.loadPropertyFile("app.properties");
-String value = PropertyUtilities.getProperty("key", "default");
-```
-
-### UtilityPropertiesMap for Flexible Property Access
-
-```java
-Properties props = new Properties();
-props.setProperty("key", "value");
-UtilityPropertiesMap map = UtilityPropertiesMap.create(props);
-String value = map.get("key");
-```
-
----
+This allows for precise control over API responses and smooth integration into existing Java applications.
 
 ## License
+This project is licensed under the **MIT License**.
 
-This library is open-source and licensed under the MIT License.
+## Author
+Developed by **Umut Ay Bora**.
+
