@@ -30,7 +30,7 @@ Include the required dependencies in your project:
 
 ### Initialize Ollama class
 ```java
-Ollama ollama = new Ollama("https://api.example.com");
+Ollama ollama = new Ollama("http://localhost:11435/");
 ```
 
 ### Perform API Inference
