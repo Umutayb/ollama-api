@@ -1,25 +1,25 @@
 package ollama.models;
 
-import ollama.Ollama;
+import ollama.Utilities;
 
 /**
- * Data model for sending prompt requests.
+ * Represents a data model for sending prompt requests to an inference engine.
  */
 public class Prompt {
     /** The model name to be used for inference. */
-    String model;
+    private String model;
 
     /** The prompt message to be sent. */
-    String prompt;
+    private String prompt;
 
     /** Indicates whether the response should be streamed. */
-    boolean stream;
+    private boolean stream;
 
-    /** The format of the response, can be a JSON schema. */
-    Object format;
+    /** The format of the response, which can be a JSON schema. */
+    private Object format;
 
     /**
-     * Constructs a PromptModel with a model name and prompt.
+     * Constructs a Prompt with a model name and prompt.
      *
      * @param model  The name of the model.
      * @param prompt The input prompt message.
@@ -29,7 +29,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with additional streaming and response format options.
+     * Constructs a Prompt with additional streaming and response format options.
      *
      * @param <ResponseFormat> The expected response format type.
      * @param model           The name of the model.
@@ -42,11 +42,11 @@ public class Prompt {
         this.model = model;
         this.prompt = prompt;
         this.stream = stream;
-        this.format = Ollama.getSchema(format, requiredFields);
+        this.format = Utilities.getSchema(format, requiredFields);
     }
 
     /**
-     * Constructs a PromptModel with additional streaming and response format options.
+     * Constructs a Prompt with additional response format options.
      *
      * @param <ResponseFormat> The expected response format type.
      * @param model           The name of the model.
@@ -59,7 +59,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with additional streaming and response format options.
+     * Constructs a Prompt with additional response format options.
      *
      * @param <ResponseFormat> The expected response format type.
      * @param prompt          The input prompt message.
@@ -71,7 +71,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with additional streaming and response format options.
+     * Constructs a Prompt with additional response format options.
      *
      * @param <ResponseFormat> The expected response format type.
      * @param model           The name of the model.
@@ -83,7 +83,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with additional streaming and response format options.
+     * Constructs a Prompt with additional response format options.
      *
      * @param <ResponseFormat> The expected response format type.
      * @param prompt          The input prompt message.
@@ -94,7 +94,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with a model name, prompt, and streaming option.
+     * Constructs a Prompt with a model name, prompt, and streaming option.
      *
      * @param model  The name of the model.
      * @param prompt The input prompt message.
@@ -107,7 +107,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with a model name, prompt, and streaming option.
+     * Constructs a Prompt with a prompt message and streaming option.
      *
      * @param prompt The input prompt message.
      * @param stream Whether the response should be streamed.
@@ -118,7 +118,7 @@ public class Prompt {
     }
 
     /**
-     * Constructs a PromptModel with a model name, prompt, and streaming option.
+     * Constructs a Prompt with only a prompt message.
      *
      * @param prompt The input prompt message.
      */
@@ -126,36 +126,79 @@ public class Prompt {
         this(prompt, false);
     }
 
+    /**
+     * Default constructor.
+     */
     public Prompt() {}
 
+    /**
+     * Sets the model name.
+     *
+     * @param model The model name.
+     */
     public void setModel(String model) {
         this.model = model;
     }
 
+    /**
+     * Sets the prompt message.
+     *
+     * @param prompt The input prompt message.
+     */
     public void setPrompt(String prompt) {
         this.prompt = prompt;
     }
 
+    /**
+     * Sets whether the response should be streamed.
+     *
+     * @param stream True if the response should be streamed, false otherwise.
+     */
     public void setStream(boolean stream) {
         this.stream = stream;
     }
 
+    /**
+     * Sets the response format.
+     *
+     * @param format The response format object.
+     */
     public void setFormat(Object format) {
         this.format = format;
     }
 
+    /**
+     * Gets the model name.
+     *
+     * @return The model name.
+     */
     public String getModel() {
         return model;
     }
 
+    /**
+     * Gets the prompt message.
+     *
+     * @return The input prompt message.
+     */
     public String getPrompt() {
         return prompt;
     }
 
+    /**
+     * Checks whether the response should be streamed.
+     *
+     * @return True if the response should be streamed, false otherwise.
+     */
     public boolean isStream() {
         return stream;
     }
 
+    /**
+     * Gets the response format.
+     *
+     * @return The response format object.
+     */
     public Object getFormat() {
         return format;
     }
