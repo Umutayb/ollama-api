@@ -36,7 +36,7 @@ public class Utilities {
     /**
      * Parses a response string to extract a "thinking" block and its corresponding response.
      *
-     * @param responseString The input response string containing a "<think>...</think>" block.
+     * @param responseString The input response string containing a thinking block.
      * @return A {@code COTResponse} containing the extracted thought and response message.
      */
     public static COTResponse thinkingBlockParser(String responseString) {

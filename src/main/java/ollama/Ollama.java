@@ -65,6 +65,7 @@ public class Ollama extends ApiUtilities {
      * Constructs an instance of {@code Ollama} with a specified base URL.
      *
      * @param baseUrl The base URL of the API service.
+     * @param defaultModel To set the default model to be messaged.
      */
     public Ollama(String baseUrl, String defaultModel) {
         this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
