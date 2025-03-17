@@ -122,4 +122,43 @@ public class Ollama extends ApiUtilities {
     }
 
 
+    public int getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+    }
+
+    public boolean isLogsRequests() {
+        return logsRequests;
+    }
+
+    public void setLogsRequests(boolean logsRequests) {
+        this.logsRequests = logsRequests;
+    }
+
+    public boolean isLogsResponses() {
+        return logsResponses;
+    }
+
+    public void setLogsResponses(boolean logsResponses) {
+        this.logsResponses = logsResponses;
+    }
+
+    public String getDefaultModel() {
+        return defaultModel;
+    }
+
+    public void setDefaultModel(String defaultModel) {
+        this.defaultModel = defaultModel;
+    }
+
+    public OllamaServices getOllamaServices() {
+        return ollamaServices;
+    }
+
+    public void setOllamaServices(OllamaServices ollamaServices) {
+        this.ollamaServices = ollamaServices;
+    }
 }
