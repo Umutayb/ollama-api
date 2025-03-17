@@ -1,6 +1,6 @@
 package ollama.models;
 
-import ollama.Utilities;
+import ollama.utilities.Utilities;
 
 /**
  * Represents a data model for sending prompt requests to an inference engine.

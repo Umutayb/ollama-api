@@ -10,7 +10,7 @@ import utils.mapping.MappingUtilities;
 import ollama.models.Prompt;
 import ollama.models.OllamaResponse;
 
-import static ollama.Utilities.getSchema;
+import static ollama.utilities.Utilities.getSchema;
 
 /**
  * The {@code Ollama} class provides API utilities for interacting with an external service.
