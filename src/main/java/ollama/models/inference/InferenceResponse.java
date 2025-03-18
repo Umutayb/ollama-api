@@ -1,11 +1,11 @@
-package ollama.models;
+package ollama.models.inference;
 
 import java.util.List;
 
 /**
  * Represents the response received from an Ollama model inference request.
  */
-public class OllamaResponse {
+public class InferenceResponse {
     /** The model name used for the inference. */
     private String model;
 
@@ -45,7 +45,7 @@ public class OllamaResponse {
     /**
      * Default constructor for creating an empty OllamaResponse instance.
      */
-    public OllamaResponse() {}
+    public InferenceResponse() {}
 
     /**
      * Constructs an OllamaResponse with all response parameters.
@@ -63,9 +63,9 @@ public class OllamaResponse {
      * @param eval_count         The number of tokens evaluated in the response generation.
      * @param eval_duration      The duration taken to evaluate the response in milliseconds.
      */
-    public OllamaResponse(String model, String created_at, String response, boolean done, String done_reason,
-                          List<Integer> context, long total_duration, long load_duration,
-                          int prompt_eval_count, long prompt_eval_duration, int eval_count, long eval_duration) {
+    public InferenceResponse(String model, String created_at, String response, boolean done, String done_reason,
+                             List<Integer> context, long total_duration, long load_duration,
+                             int prompt_eval_count, long prompt_eval_duration, int eval_count, long eval_duration) {
         this.model = model;
         this.created_at = created_at;
         this.response = response;

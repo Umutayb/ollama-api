@@ -1,10 +1,9 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import context.ContextStore;
 import ollama.Ollama;
-import ollama.models.Prompt;
+import ollama.models.inference.InferenceModel;
 import org.junit.Test;
 import utils.mapping.MappingUtilities;
-import utils.reflection.ReflectionUtilities;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class AppTest {
     public void generationTest() throws JsonProcessingException {
         ContextStore.loadProperties("test.properties");
         Ollama ollama = new Ollama("http://i-bora.com:11435/");
-        Prompt prompt = new Prompt(
+        InferenceModel prompt = new InferenceModel(
                 "qwen2.5:32b",
                 "Create a pet. leave ID null",
                 false
