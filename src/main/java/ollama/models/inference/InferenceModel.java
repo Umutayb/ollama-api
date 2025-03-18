@@ -1,11 +1,11 @@
-package ollama.models;
+package ollama.models.inference;
 
 import ollama.utilities.Utilities;
 
 /**
  * Represents a data model for sending prompt requests to an inference engine.
  */
-public class Prompt {
+public class InferenceModel {
     /** The model name to be used for inference. */
     private String model;
 
@@ -24,7 +24,7 @@ public class Prompt {
      * @param model  The name of the model.
      * @param prompt The input prompt message.
      */
-    public Prompt(String model, String prompt) {
+    public InferenceModel(String model, String prompt) {
         this(model, prompt, false);
     }
 
@@ -38,7 +38,7 @@ public class Prompt {
      * @param format          The response format as a class type.
      * @param requiredFields  Fields required in the response schema.
      */
-    public <ResponseFormat> Prompt(String model, String prompt, boolean stream, Class<ResponseFormat> format, String... requiredFields) {
+    public <ResponseFormat> InferenceModel(String model, String prompt, boolean stream, Class<ResponseFormat> format, String... requiredFields) {
         this.model = model;
         this.prompt = prompt;
         this.stream = stream;
@@ -54,7 +54,7 @@ public class Prompt {
      * @param format          The response format as a class type.
      * @param requiredFields  Fields required in the response schema.
      */
-    public <ResponseFormat> Prompt(String model, String prompt, Class<ResponseFormat> format, String... requiredFields) {
+    public <ResponseFormat> InferenceModel(String model, String prompt, Class<ResponseFormat> format, String... requiredFields) {
         this(model, prompt, false, format, requiredFields);
     }
 
@@ -66,7 +66,7 @@ public class Prompt {
      * @param format          The response format as a class type.
      * @param requiredFields  Fields required in the response schema.
      */
-    public <ResponseFormat> Prompt(String prompt, Class<ResponseFormat> format, String... requiredFields) {
+    public <ResponseFormat> InferenceModel(String prompt, Class<ResponseFormat> format, String... requiredFields) {
         this(null, prompt, false, format, requiredFields);
     }
 
@@ -78,7 +78,7 @@ public class Prompt {
      * @param prompt          The input prompt message.
      * @param format          The response format as a class type.
      */
-    public <ResponseFormat> Prompt(String model, String prompt, Class<ResponseFormat> format) {
+    public <ResponseFormat> InferenceModel(String model, String prompt, Class<ResponseFormat> format) {
         this(model, prompt, false, format);
     }
 
@@ -89,7 +89,7 @@ public class Prompt {
      * @param prompt          The input prompt message.
      * @param format          The response format as a class type.
      */
-    public <ResponseFormat> Prompt(String prompt, Class<ResponseFormat> format) {
+    public <ResponseFormat> InferenceModel(String prompt, Class<ResponseFormat> format) {
         this(null, prompt, false, format);
     }
 
@@ -100,7 +100,7 @@ public class Prompt {
      * @param prompt The input prompt message.
      * @param stream Whether the response should be streamed.
      */
-    public Prompt(String model, String prompt, boolean stream) {
+    public InferenceModel(String model, String prompt, boolean stream) {
         this.model = model;
         this.prompt = prompt;
         this.stream = stream;
@@ -112,7 +112,7 @@ public class Prompt {
      * @param prompt The input prompt message.
      * @param stream Whether the response should be streamed.
      */
-    public Prompt(String prompt, boolean stream) {
+    public InferenceModel(String prompt, boolean stream) {
         this.prompt = prompt;
         this.stream = stream;
     }
@@ -122,14 +122,14 @@ public class Prompt {
      *
      * @param prompt The input prompt message.
      */
-    public Prompt(String prompt) {
+    public InferenceModel(String prompt) {
         this(prompt, false);
     }
 
     /**
      * Default constructor.
      */
-    public Prompt() {}
+    public InferenceModel() {}
 
     /**
      * Sets the model name.
