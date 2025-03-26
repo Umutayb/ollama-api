@@ -65,9 +65,10 @@ public class Ollama extends ApiUtilities {
     }
 
     /**
-     * Constructs an instance of {@code Ollama} with a specified base URL and authorisation header.
+     * Constructs an instance of {@code Ollama} with a specified base URL and authorization header.
      *
-     * @param baseUrl The base URL of the API service.
+     * @param baseUrl         The base URL of the API service.
+     * @param authorisationHeader The authorization header to include in requests.
      */
     public Ollama(String baseUrl, Headers authorisationHeader) {
         this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
@@ -84,9 +85,11 @@ public class Ollama extends ApiUtilities {
     }
 
     /**
-     * Constructs an instance of {@code Ollama} with a specified base URL, a default model and authorisation header.
+     * Constructs an instance of {@code Ollama} with a specified base URL, a default model, and authorization header.
      *
-     * @param baseUrl The base URL of the API service.
+     * @param baseUrl          The base URL of the API service.
+     * @param defaultModel     The default model to use for requests.
+     * @param authorisationHeader The authorization header to include in requests.
      */
     public Ollama(String baseUrl, String defaultModel, Headers authorisationHeader) {
         this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
@@ -135,8 +138,10 @@ public class Ollama extends ApiUtilities {
     }
 
     /**
-     * Acquires available models.
+     * Retrieves a list of available models from the Ollama server.
      *
+     * @return A list of available models. The exact type of the returned object
+     *         depends on the Ollama server's response format.
      */
     public Object getModels() {
         log.info("Getting models.");
@@ -186,42 +191,98 @@ public class Ollama extends ApiUtilities {
         }
     }
 
+    /**
+     * Gets the read timeout in milliseconds.  This timeout applies to network
+     * operations when communicating with the Ollama server.
+     *
+     * @return The read timeout in milliseconds.
+     */
     public int getReadTimeout() {
         return readTimeout;
     }
 
+    /**
+     * Sets the read timeout in milliseconds.  This timeout applies to network
+     * operations when communicating with the Ollama server.
+     *
+     * @param readTimeout The read timeout in milliseconds.
+     */
     public void setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
     }
 
+    /**
+     * Checks if request logging is enabled.  If enabled, requests sent to the
+     * Ollama server will be logged.
+     *
+     * @return True if request logging is enabled, false otherwise.
+     */
     public boolean isLogsRequests() {
         return logsRequests;
     }
 
+    /**
+     * Enables or disables request logging.  When enabled, requests sent to the
+     * Ollama server will be logged.
+     *
+     * @param logsRequests True to enable request logging, false to disable.
+     */
     public void setLogsRequests(boolean logsRequests) {
         this.logsRequests = logsRequests;
     }
 
+    /**
+     * Checks if response logging is enabled.  If enabled, responses received from
+     * the Ollama server will be logged.
+     *
+     * @return True if response logging is enabled, false otherwise.
+     */
     public boolean isLogsResponses() {
         return logsResponses;
     }
 
+    /**
+     * Enables or disables response logging.  When enabled, responses received from
+     * the Ollama server will be logged.
+     *
+     * @param logsResponses True to enable response logging, false to disable.
+     */
     public void setLogsResponses(boolean logsResponses) {
         this.logsResponses = logsResponses;
     }
 
+    /**
+     * Gets the default model to use for requests.
+     *
+     * @return The default model name.
+     */
     public String getDefaultModel() {
         return defaultModel;
     }
 
+    /**
+     * Sets the default model to use for requests.
+     *
+     * @param defaultModel The default model name.
+     */
     public void setDefaultModel(String defaultModel) {
         this.defaultModel = defaultModel;
     }
 
+    /**
+     * Gets the OllamaServices instance used for interacting with the Ollama server.
+     *
+     * @return The OllamaServices instance.
+     */
     public OllamaServices getOllamaServices() {
         return ollamaServices;
     }
 
+    /**
+     * Sets the OllamaServices instance used for interacting with the Ollama server.
+     *
+     * @param ollamaServices The OllamaServices instance.
+     */
     public void setOllamaServices(OllamaServices ollamaServices) {
         this.ollamaServices = ollamaServices;
     }
