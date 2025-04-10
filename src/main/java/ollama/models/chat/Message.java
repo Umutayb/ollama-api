@@ -3,6 +3,9 @@ package ollama.models.chat;
 /**
  * Represents a message in a chat conversation.  This class encapsulates the role of the sender
  * and the content of the message.
+ *
+ * @author Umut Ay Bora
+ * @version 0.0.3
  */
 public class Message {
     Role role;

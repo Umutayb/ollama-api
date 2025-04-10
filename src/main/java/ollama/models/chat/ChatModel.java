@@ -5,6 +5,9 @@ import java.util.List;
 /**
  * Represents a chat model with its associated messages and streaming option.
  * This class is used to configure and send chat requests to an Ollama model.
+ *
+ * @author Umut Ay Bora
+ * @version 0.0.3
  */
 public class ChatModel {
 

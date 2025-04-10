@@ -4,64 +4,69 @@ import java.util.List;
 
 /**
  * Represents the response received from an Ollama model inference request.
+ * This class contains details about the model used, response metadata,
+ * execution durations, and token evaluation counts.
+ *
+ * @author Umut Ay Bora
+ * @version 0.0.1
  */
 public class InferenceResponse {
-    /** The model name used for the inference. */
+    /** The name of the model used for inference. */
     private String model;
 
-    /** The timestamp when the response was created. */
+    /** The timestamp when the response was generated. */
     private String created_at;
 
     /** The actual response content. */
     private String response;
 
-    /** Indicates whether the inference process is completed. */
+    /** Indicates whether the inference process has completed. */
     private boolean done;
 
-    /** The reason why the inference process completed. */
+    /** The reason for the completion of the inference process. */
     private String done_reason;
 
-    /** The context of the response, represented as a list of integers. */
+    /** The context of the response, represented as a list of token IDs. */
     private List<Integer> context;
 
     /** The total duration of the inference process in milliseconds. */
     private long total_duration;
 
-    /** The duration taken to load the model in milliseconds. */
+    /** The time taken to load the model in milliseconds. */
     private long load_duration;
 
-    /** The number of tokens evaluated in the prompt. */
+    /** The number of tokens processed in the input prompt. */
     private int prompt_eval_count;
 
-    /** The duration taken to evaluate the prompt in milliseconds. */
+    /** The time taken to evaluate the input prompt in milliseconds. */
     private long prompt_eval_duration;
 
-    /** The number of tokens evaluated in the response generation. */
+    /** The number of tokens generated in the response. */
     private int eval_count;
 
-    /** The duration taken to evaluate the response in milliseconds. */
+    /** The time taken to generate the response in milliseconds. */
     private long eval_duration;
 
     /**
-     * Default constructor for creating an empty OllamaResponse instance.
+     * Default constructor for creating an empty InferenceResponse instance.
      */
     public InferenceResponse() {}
 
     /**
-     * Constructs an OllamaResponse with all response parameters.
+     * Constructs an InferenceResponse with all response parameters.
      *
-     * @param model              The model name used for inference.
-     * @param created_at         The timestamp when the response was created.
-     * @param response           The actual response content.
-     * @param done               Whether the inference process is completed.
-     * @param done_reason        The reason why the inference process completed.
-     * @param context            The response context as a list of integers.
-     * @param total_duration     The total duration of the inference process in milliseconds.
-     * @param load_duration      The duration taken to load the model in milliseconds.
-     * @param prompt_eval_count  The number of tokens evaluated in the prompt.
-     * @param prompt_eval_duration The duration taken to evaluate the prompt in milliseconds.
-     * @param eval_count         The number of tokens evaluated in the response generation.
-     * @param eval_duration      The duration taken to evaluate the response in milliseconds.
+     * @param model               The model name used for inference.
+     * @param created_at          The timestamp when the response was generated.
+     * @param response            The actual response content.
+     * @param done                Whether the inference process has completed.
+     * @param done_reason         The reason for the completion of the inference process.
+     * @param context             The response context as a list of token IDs.
+     * @param total_duration      The total duration of the inference process in milliseconds.
+     * @param load_duration       The time taken to load the model in milliseconds.
+     * @param prompt_eval_count   The number of tokens processed in the input prompt.
+     * @param prompt_eval_duration The time taken to evaluate the input prompt in milliseconds.
+     * @param eval_count          The number of tokens generated in the response.
+     * @param eval_duration       The time taken to generate the response in milliseconds.
      */
     public InferenceResponse(String model, String created_at, String response, boolean done, String done_reason,
                              List<Integer> context, long total_duration, long load_duration,
@@ -81,7 +86,7 @@ public class InferenceResponse {
     }
 
     /**
-     * Gets the model name used for inference.
+     * Returns the name of the model used for inference.
      *
      * @return The model name.
      */
@@ -90,16 +95,16 @@ public class InferenceResponse {
     }
 
     /**
-     * Gets the timestamp when the response was created.
+     * Returns the timestamp when the response was generated.
      *
      * @return The creation timestamp.
      */
-    public String getCreated_at() {
+    public String getCreatedAt() {
         return created_at;
     }
 
     /**
-     * Gets the response content.
+     * Returns the response content.
      *
      * @return The response string.
      */
@@ -108,83 +113,83 @@ public class InferenceResponse {
     }
 
     /**
-     * Checks if the inference process is completed.
+     * Checks if the inference process has completed.
      *
-     * @return True if the inference is done, false otherwise.
+     * @return {@code true} if the inference is done, {@code false} otherwise.
      */
     public boolean isDone() {
         return done;
     }
 
     /**
-     * Gets the reason why the inference process completed.
+     * Returns the reason for the completion of the inference process.
      *
      * @return The completion reason.
      */
-    public String getDone_reason() {
+    public String getDoneReason() {
         return done_reason;
     }
 
     /**
-     * Gets the context of the response.
+     * Returns the response context as a list of token IDs.
      *
-     * @return The response context as a list of integers.
+     * @return The response context.
      */
     public List<Integer> getContext() {
         return context;
     }
 
     /**
-     * Gets the total duration of the inference process.
+     * Returns the total duration of the inference process in milliseconds.
      *
-     * @return The total duration in milliseconds.
+     * @return The total duration.
      */
-    public long getTotal_duration() {
+    public long getTotalDuration() {
         return total_duration;
     }
 
     /**
-     * Gets the duration taken to load the model.
+     * Returns the time taken to load the model in milliseconds.
      *
-     * @return The load duration in milliseconds.
+     * @return The load duration.
      */
-    public long getLoad_duration() {
+    public long getLoadDuration() {
         return load_duration;
     }
 
     /**
-     * Gets the number of tokens evaluated in the prompt.
+     * Returns the number of tokens processed in the input prompt.
      *
-     * @return The number of evaluated prompt tokens.
+     * @return The number of prompt tokens evaluated.
      */
-    public int getPrompt_eval_count() {
+    public int getPromptEvalCount() {
         return prompt_eval_count;
     }
 
     /**
-     * Gets the duration taken to evaluate the prompt.
+     * Returns the time taken to evaluate the input prompt in milliseconds.
      *
-     * @return The prompt evaluation duration in milliseconds.
+     * @return The prompt evaluation duration.
      */
-    public long getPrompt_eval_duration() {
+    public long getPromptEvalDuration() {
         return prompt_eval_duration;
     }
 
     /**
-     * Gets the number of tokens evaluated in the response generation.
+     * Returns the number of tokens generated in the response.
      *
-     * @return The number of evaluated response tokens.
+     * @return The number of response tokens evaluated.
      */
-    public int getEval_count() {
+    public int getEvalCount() {
         return eval_count;
     }
 
     /**
-     * Gets the duration taken to evaluate the response.
+     * Returns the time taken to generate the response in milliseconds.
      *
-     * @return The response evaluation duration in milliseconds.
+     * @return The response evaluation duration.
      */
-    public long getEval_duration() {
+    public long getEvalDuration() {
         return eval_duration;
     }
 }

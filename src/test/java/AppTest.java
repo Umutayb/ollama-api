@@ -1,8 +1,10 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import context.ContextStore;
+import models.Pet;
 import ollama.Ollama;
 import ollama.models.inference.InferenceModel;
 import org.junit.Test;
+import utils.Printer;
 import utils.mapping.MappingUtilities;
 
 import java.util.List;
@@ -12,30 +14,17 @@ import java.util.List;
  */
 public class AppTest {
 
+    Printer log = new Printer(AppTest.class);
+
     @Test
     public void generationTest() throws JsonProcessingException {
         ContextStore.loadProperties("test.properties");
         Ollama ollama = new Ollama("http://i-bora.com:11435/");
-        InferenceModel prompt = new InferenceModel(
-                "qwen2.5:32b",
-                "Create a pet. leave ID null",
-                false
-        );
+        InferenceModel prompt = new InferenceModel.Builder()
+                .model("gemma3:27b")
+                .prompt("Create a pet. leave ID null")
+                .build();
         Pet pet = ollama.inference(prompt, Pet.class);
-        System.out.println(MappingUtilities.Json.getJsonString(pet));;
-    }
-
-    public static class Pet {
-        Long id;
-        DataModel category;
-        String name;
-        List<String> photoUrls;
-        List<DataModel> tags;
-        String status;
-
-        public static class DataModel {
-            Long id;
-            String name;
-        }
+        log.info(MappingUtilities.Json.getJsonString(pet));;
     }
 }

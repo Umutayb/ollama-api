@@ -1,205 +1,236 @@
 package ollama.models.inference;
 
-import ollama.utilities.Utilities;
+import utils.FileUtilities;
+
+import java.util.List;
+
+import static ollama.utilities.Utilities.getSchema;
 
 /**
  * Represents a data model for sending prompt requests to an inference engine.
+ * This model encapsulates the configuration details required for making an inference request, such as
+ * the model name, prompt, stream option, and any associated images.
+ *
+ * <p> Example usage:
+ * <pre>
+ * InferenceModel model = new InferenceModel.Builder()
+ *         .model("gemma3:27b")
+ *         .prompt("Tell me a story.")
+ *         .stream(true)
+ *         .format("json")
+ *         .build();
+ * </pre>
+ *
+ * @author Umut Ay Bora
+ * @version 0.0.1
  */
 public class InferenceModel {
-    /** The model name to be used for inference. */
-    private String model;
+    /** The name of the model used for inference. */
+    private final String model;
 
-    /** The prompt message to be sent. */
-    private String prompt;
+    /** The prompt to be sent for inference. */
+    private final String prompt;
 
     /** Indicates whether the response should be streamed. */
-    private boolean stream;
+    private final boolean stream;
 
-    /** The format of the response, which can be a JSON schema. */
-    private Object format;
+    /** A list of images associated with the inference request, if any. */
+    private final List<String> images;
+
+    /** The format of the response, which can be a JSON schema or other formats. */
+    private final Object format;
 
     /**
-     * Constructs a Prompt with a model name and prompt.
+     * Constructs a new InferenceModel with the provided configuration.
      *
-     * @param model  The name of the model.
-     * @param prompt The input prompt message.
+     * @param builder The builder object containing the configuration details.
      */
-    public InferenceModel(String model, String prompt) {
-        this(model, prompt, false);
+    private InferenceModel(Builder builder) {
+        this.model = builder.model;
+        this.prompt = builder.prompt;
+        this.stream = builder.stream;
+        this.images = builder.images;
+        this.format = builder.format;
     }
 
     /**
-     * Constructs a Prompt with additional streaming and response format options.
+     * Returns the model name.
      *
-     * @param <ResponseFormat> The expected response format type.
-     * @param model           The name of the model.
-     * @param prompt          The input prompt message.
-     * @param stream          Whether the response should be streamed.
-     * @param format          The response format as a class type.
-     * @param requiredFields  Fields required in the response schema.
-     */
-    public <ResponseFormat> InferenceModel(String model, String prompt, boolean stream, Class<ResponseFormat> format, String... requiredFields) {
-        this.model = model;
-        this.prompt = prompt;
-        this.stream = stream;
-        this.format = Utilities.getSchema(format, requiredFields);
-    }
-
-    /**
-     * Constructs a Prompt with additional response format options.
-     *
-     * @param <ResponseFormat> The expected response format type.
-     * @param model           The name of the model.
-     * @param prompt          The input prompt message.
-     * @param format          The response format as a class type.
-     * @param requiredFields  Fields required in the response schema.
-     */
-    public <ResponseFormat> InferenceModel(String model, String prompt, Class<ResponseFormat> format, String... requiredFields) {
-        this(model, prompt, false, format, requiredFields);
-    }
-
-    /**
-     * Constructs a Prompt with additional response format options.
-     *
-     * @param <ResponseFormat> The expected response format type.
-     * @param prompt          The input prompt message.
-     * @param format          The response format as a class type.
-     * @param requiredFields  Fields required in the response schema.
-     */
-    public <ResponseFormat> InferenceModel(String prompt, Class<ResponseFormat> format, String... requiredFields) {
-        this(null, prompt, false, format, requiredFields);
-    }
-
-    /**
-     * Constructs a Prompt with additional response format options.
-     *
-     * @param <ResponseFormat> The expected response format type.
-     * @param model           The name of the model.
-     * @param prompt          The input prompt message.
-     * @param format          The response format as a class type.
-     */
-    public <ResponseFormat> InferenceModel(String model, String prompt, Class<ResponseFormat> format) {
-        this(model, prompt, false, format);
-    }
-
-    /**
-     * Constructs a Prompt with additional response format options.
-     *
-     * @param <ResponseFormat> The expected response format type.
-     * @param prompt          The input prompt message.
-     * @param format          The response format as a class type.
-     */
-    public <ResponseFormat> InferenceModel(String prompt, Class<ResponseFormat> format) {
-        this(null, prompt, false, format);
-    }
-
-    /**
-     * Constructs a Prompt with a model name, prompt, and streaming option.
-     *
-     * @param model  The name of the model.
-     * @param prompt The input prompt message.
-     * @param stream Whether the response should be streamed.
-     */
-    public InferenceModel(String model, String prompt, boolean stream) {
-        this.model = model;
-        this.prompt = prompt;
-        this.stream = stream;
-    }
-
-    /**
-     * Constructs a Prompt with a prompt message and streaming option.
-     *
-     * @param prompt The input prompt message.
-     * @param stream Whether the response should be streamed.
-     */
-    public InferenceModel(String prompt, boolean stream) {
-        this.prompt = prompt;
-        this.stream = stream;
-    }
-
-    /**
-     * Constructs a Prompt with only a prompt message.
-     *
-     * @param prompt The input prompt message.
-     */
-    public InferenceModel(String prompt) {
-        this(prompt, false);
-    }
-
-    /**
-     * Default constructor.
-     */
-    public InferenceModel() {}
-
-    /**
-     * Sets the model name.
-     *
-     * @param model The model name.
-     */
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    /**
-     * Sets the prompt message.
-     *
-     * @param prompt The input prompt message.
-     */
-    public void setPrompt(String prompt) {
-        this.prompt = prompt;
-    }
-
-    /**
-     * Sets whether the response should be streamed.
-     *
-     * @param stream True if the response should be streamed, false otherwise.
-     */
-    public void setStream(boolean stream) {
-        this.stream = stream;
-    }
-
-    /**
-     * Sets the response format.
-     *
-     * @param format The response format object.
-     */
-    public void setFormat(Object format) {
-        this.format = format;
-    }
-
-    /**
-     * Gets the model name.
-     *
-     * @return The model name.
+     * @return The model name as a String.
      */
     public String getModel() {
         return model;
     }
 
     /**
-     * Gets the prompt message.
+     * Returns the prompt that is sent for inference.
      *
-     * @return The input prompt message.
+     * @return The prompt as a String.
      */
     public String getPrompt() {
         return prompt;
     }
 
     /**
-     * Checks whether the response should be streamed.
+     * Returns whether the response should be streamed.
      *
-     * @return True if the response should be streamed, false otherwise.
+     * @return True if streaming is enabled, false otherwise.
      */
     public boolean isStream() {
         return stream;
     }
 
     /**
-     * Gets the response format.
+     * Returns the list of images associated with the request, if any.
      *
-     * @return The response format object.
+     * @return A list of image URLs or data.
+     */
+    public List<String> getImages() {
+        return images;
+    }
+
+    /**
+     * Returns the format of the response.
+     *
+     * @return The response format as an Object.
      */
     public Object getFormat() {
         return format;
+    }
+
+    /**
+     * A builder class for creating InferenceModel objects.
+     * <p>
+     * This builder pattern allows for a flexible construction of the InferenceModel, where each of the
+     * fields can be set independently. The builder ensures that the model and prompt are not null or empty before
+     * constructing the model.
+     * </p>
+     */
+    public static class Builder {
+        private String model;
+        private String prompt;
+        private boolean stream = false;
+        private List<String> images;
+        private Object format;
+
+        /**
+         * Default constructor for the Builder.
+         */
+        public Builder() {}
+
+        /**
+         * Constructs a builder out of an existing Inference model.
+         *
+         * @param model The model name.
+         */
+        public Builder(InferenceModel model) {
+            this.model = model.getModel();
+            this.prompt = model.getPrompt();
+            this.stream = model.isStream();
+            this.images = model.getImages();
+            this.format = model.getFormat();
+        }
+
+        /**
+         * Sets the model name for the inference request.
+         *
+         * @param model The model name.
+         * @return The builder instance for method chaining.
+         */
+        public Builder model(String model) {
+            this.model = model;
+            return this;
+        }
+
+        /**
+         * Sets the prompt for the inference request.
+         *
+         * @param prompt The prompt.
+         * @return The builder instance for method chaining.
+         */
+        public Builder prompt(String prompt) {
+            this.prompt = prompt;
+            return this;
+        }
+
+        /**
+         * Enables or disables streaming for the response.
+         *
+         * @param stream True to enable streaming, false to disable.
+         * @return The builder instance for method chaining.
+         */
+        public Builder stream(boolean stream) {
+            this.stream = stream;
+            return this;
+        }
+
+        /**
+         * Sets the list of images to be associated with the inference request.
+         *
+         * @param images A list of image URLs or image data.
+         * @return The builder instance for method chaining.
+         */
+        public Builder images(List<String> images) {
+            this.images = images;
+            return this;
+        }
+
+        /**
+         * Sets the list of images to be associated with the inference request.
+         *
+         * @param filePath Path to the image that will be converted to Base64.
+         * @return The builder instance for method chaining.
+         */
+        public Builder images(String filePath){
+            this.images = List.of(FileUtilities.getEncodedString(filePath));
+            return this;
+        }
+
+        /**
+         * Sets the format of the response.
+         *
+         * @param format The response format, such as a JSON schema.
+         *
+         * <p>Example usage:</p>
+         * <pre>
+         * InferenceModel prompt = new InferenceModel.Builder(prompt)
+         *     .model(prompt.getModel() == null ? defaultModel : prompt.getModel())
+         *     .format(getSchema(responseType, requiredFields))
+         *     .build();
+         * </pre>
+         *
+         * @return The builder instance for method chaining.
+         */
+        public Builder format(Object format) {
+            this.format = format;
+            return this;
+        }
+
+        /**
+         * Sets the format of the response.
+         *
+         * @param format The response format, such as JSON schema.
+         * @return The builder instance for method chaining.
+         */
+        public <T> Builder format(Class<T> format, String... requiredFields) {
+            this.format = getSchema(format, requiredFields);
+            return this;
+        }
+
+        /**
+         * Builds and returns a new InferenceModel object.
+         *
+         * @return A new InferenceModel object.
+         * @throws IllegalArgumentException if the model or prompt is null or empty.
+         */
+        public InferenceModel build() {
+            if (model == null || model.isEmpty())
+                throw new IllegalArgumentException("Model name cannot be null or empty.");
+
+            if (prompt == null || prompt.isEmpty())
+                throw new IllegalArgumentException("Prompt cannot be null or empty.");
+
+            return new InferenceModel(this);
+        }
     }
 }

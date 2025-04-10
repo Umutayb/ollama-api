@@ -5,6 +5,9 @@ import java.util.List;
 
 /**
  * Represents the response from a chat completion request.
+ *
+ * @author Umut Ay Bora
+ * @version 0.0.3
  */
 public class ChatResponse {
 

@@ -131,7 +131,9 @@ public class Ollama extends ApiUtilities {
      * @return A {@code ResponseModel} containing the API response.
      */
     public InferenceResponse inference(InferenceModel prompt) {
-        prompt.setModel(prompt.getModel() == null ? defaultModel : prompt.getModel());
+        prompt = new InferenceModel.Builder(prompt)
+                .model(prompt.getModel() == null ? defaultModel : prompt.getModel())
+                .build();
         log.info("Inference with " + prompt.getModel() + ".");
         Call<InferenceResponse> inferenceCall = ollamaServices.generate(prompt);
         return perform(inferenceCall, true, logsResponses, Response.class);
@@ -174,9 +176,11 @@ public class Ollama extends ApiUtilities {
      */
     public <T> T inference(InferenceModel prompt, Class<T> responseType, String... requiredFields) {
         try {
-            prompt.setModel(prompt.getModel() == null ? defaultModel : prompt.getModel());
             log.info("Inference with " + prompt.getModel() + ".");
-            prompt.setFormat(getSchema(responseType, requiredFields));
+            prompt = new InferenceModel.Builder(prompt)
+                    .model(prompt.getModel() == null ? defaultModel : prompt.getModel())
+                    .format(responseType, requiredFields)
+                    .build();
             Call<InferenceResponse> inferenceCall = ollamaServices.generate(prompt);
             String response = ((InferenceResponse) perform(
                     inferenceCall,
