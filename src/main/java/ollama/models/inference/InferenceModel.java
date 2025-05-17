@@ -37,6 +37,9 @@ public class InferenceModel {
     /** A list of images associated with the inference request, if any. */
     private final List<String> images;
 
+    /** Temperature and seed options */
+    private final Options options;
+
     /** The format of the response, which can be a JSON schema or other formats. */
     private final Object format;
 
@@ -51,6 +54,7 @@ public class InferenceModel {
         this.stream = builder.stream;
         this.images = builder.images;
         this.format = builder.format;
+        this.options = builder.options;
     }
 
     /**
@@ -90,12 +94,97 @@ public class InferenceModel {
     }
 
     /**
+     * Returns the temperature and seed options, if specified.
+     *
+     * @return Options
+     */
+    public Options getOptions() {
+        return options;
+    }
+
+    /**
      * Returns the format of the response.
      *
      * @return The response format as an Object.
      */
     public Object getFormat() {
         return format;
+    }
+
+    public static class Options {
+        double temperature;
+        int seed;
+
+        /**
+         * Constructs an Options object with temperature and seed.
+         *
+         * @param temperature The temperature value.
+         * @param seed The seed value.
+         */
+        public Options(double temperature, int seed) {
+            this.temperature = temperature;
+            this.seed = seed;
+        }
+
+        /**
+         * Constructs an Options object with only a seed.
+         *
+         * @param seed The seed value.
+         */
+        public Options(int seed) {
+            this.seed = seed;
+        }
+
+        /**
+         * Constructs an Options object with only a temperature.
+         *
+         * @param temperature The temperature value.
+         */
+        public Options(double temperature) {
+            this.temperature = temperature;
+        }
+
+        /**
+         * Constructs an empty Options object.
+         */
+        public Options() {
+        }
+
+        /**
+         * Returns the temperature.
+         *
+         * @return The temperature value.
+         */
+        public double getTemperature() {
+            return temperature;
+        }
+
+        /**
+         * Sets the temperature.
+         *
+         * @param temperature The temperature value to set.
+         */
+        public void setTemperature(double temperature) {
+            this.temperature = temperature;
+        }
+
+        /**
+         * Returns the seed.
+         *
+         * @return The seed value.
+         */
+        public int getSeed() {
+            return seed;
+        }
+
+        /**
+         * Sets the seed.
+         *
+         * @param seed The seed value to set.
+         */
+        public void setSeed(int seed) {
+            this.seed = seed;
+        }
     }
 
     /**
@@ -111,6 +200,7 @@ public class InferenceModel {
         private String prompt;
         private boolean stream = false;
         private List<String> images;
+        private Options options;
         private Object format;
 
         /**
@@ -129,6 +219,7 @@ public class InferenceModel {
             this.stream = model.isStream();
             this.images = model.getImages();
             this.format = model.getFormat();
+            this.options = model.getOptions();
         }
 
         /**
@@ -183,6 +274,28 @@ public class InferenceModel {
          */
         public Builder images(String filePath){
             this.images = List.of(FileUtilities.getEncodedString(filePath));
+            return this;
+        }
+
+        /**
+         * Sets the seed and temperature options to be associated with the inference request.
+         *
+         * @param options Path to the image that will be converted to Base64.
+         * @return The builder instance for method chaining.
+         */
+        public Builder options(Options options){
+            this.options = options;
+            return this;
+        }
+
+        /**
+         * Sets the seed and temperature options to be associated with the inference request.
+         *
+         * @param temperature Path to the image that will be converted to Base64.
+         * @return The builder instance for method chaining.
+         */
+        public Builder temperature(double temperature){
+            this.options = this.options == null ? new Options(temperature) : new Options(temperature, this.options.seed) ;
             return this;
         }
 
