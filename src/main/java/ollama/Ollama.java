@@ -10,16 +10,14 @@ import retrofit2.Response;
 import utils.mapping.MappingUtilities;
 import ollama.models.inference.InferenceModel;
 import ollama.models.inference.InferenceResponse;
-import wasapi.ApiUtilities;
-import wasapi.ServiceGenerator;
-
-import static ollama.utilities.Utilities.getSchema;
+import wasapi.WasapiUtilities;
+import wasapi.WasapiClient;
 
 /**
  * The {@code Ollama} class provides API utilities for interacting with an external service.
  * It facilitates API communication, request handling, and JSON schema generation.
  */
-public class Ollama extends ApiUtilities {
+public class Ollama extends WasapiUtilities {
 
     /**
      * Service interface for making API calls.
@@ -56,7 +54,7 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator.Builder()
+        ollamaServices = new WasapiClient.Builder()
                 .baseUrl(baseUrl)
                 .readTimeout(readTimeout)
                 .logRequestBody(logsRequests)
@@ -75,7 +73,7 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator.Builder()
+        ollamaServices = new WasapiClient.Builder()
                 .baseUrl(baseUrl)
                 .headers(authorisationHeader)
                 .readTimeout(readTimeout)
@@ -97,7 +95,7 @@ public class Ollama extends ApiUtilities {
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         this.defaultModel = defaultModel;
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator.Builder()
+        ollamaServices = new WasapiClient.Builder()
                 .baseUrl(baseUrl)
                 .headers(authorisationHeader)
                 .readTimeout(readTimeout)
@@ -117,7 +115,7 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         this.defaultModel = defaultModel;
-        ollamaServices = new ServiceGenerator.Builder()
+        ollamaServices = new WasapiClient.Builder()
                 .baseUrl(baseUrl)
                 .readTimeout(readTimeout)
                 .logRequestBody(logsRequests)
