@@ -19,10 +19,10 @@ public class AppTest {
 
     @Test
     public void generationTest() throws JsonProcessingException {
-        ContextStore.loadProperties("test.properties");
+        ContextStore.loadProperties("test.properties", "secret.properties");
         Ollama ollama = new Ollama(
                 "https://i-bora.com/ollama/",
-                Headers.of("Authorization", "Bearer " + ollamaToken));
+                Headers.of("Authorization", "Bearer " + ContextStore.get("ollama-token")));
         InferenceModel prompt = new InferenceModel.Builder()
                 .model("gemma3:27b")
                 .prompt("Create a pet. leave ID null")
