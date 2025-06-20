@@ -16,7 +16,6 @@ import java.util.List;
 public class AppTest {
 
     Printer log = new Printer(AppTest.class);
-    String ollamaToken = "sk-88c6492c98af436f8de8b40182f63c8a";
 
     @Test
     public void generationTest() throws JsonProcessingException {

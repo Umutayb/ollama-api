@@ -1,7 +1,5 @@
 package ollama;
 
-import api_assured.ApiUtilities;
-import api_assured.ServiceGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import context.ContextStore;
 import okhttp3.Headers;
@@ -12,6 +10,8 @@ import retrofit2.Response;
 import utils.mapping.MappingUtilities;
 import ollama.models.inference.InferenceModel;
 import ollama.models.inference.InferenceResponse;
+import wasapi.ApiUtilities;
+import wasapi.ServiceGenerator;
 
 import static ollama.utilities.Utilities.getSchema;
 
@@ -56,12 +56,12 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator()
-                .setBASE_URL(baseUrl)
-                .setReadTimeout(readTimeout)
-                .setRequestLogging(logsRequests)
+        ollamaServices = new ServiceGenerator.Builder()
+                .baseUrl(baseUrl)
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
                 .printHeaders(logsRequests)
-                .generate(OllamaServices.class);
+                .build(OllamaServices.class);
     }
 
     /**
@@ -75,13 +75,13 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator()
-                .setBASE_URL(baseUrl)
-                .setHeaders(authorisationHeader)
-                .setReadTimeout(readTimeout)
-                .setRequestLogging(logsRequests)
+        ollamaServices = new ServiceGenerator.Builder()
+                .baseUrl(baseUrl)
+                .headers(authorisationHeader)
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
                 .printHeaders(logsRequests)
-                .generate(OllamaServices.class);
+                .build(OllamaServices.class);
     }
 
     /**
@@ -97,13 +97,13 @@ public class Ollama extends ApiUtilities {
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         this.defaultModel = defaultModel;
         keepLogs(logsRequests);
-        ollamaServices = new ServiceGenerator()
-                .setBASE_URL(baseUrl)
-                .setHeaders(authorisationHeader)
-                .setReadTimeout(readTimeout)
-                .setRequestLogging(logsRequests)
+        ollamaServices = new ServiceGenerator.Builder()
+                .baseUrl(baseUrl)
+                .headers(authorisationHeader)
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
                 .printHeaders(logsRequests)
-                .generate(OllamaServices.class);
+                .build(OllamaServices.class);
     }
 
     /**
@@ -117,11 +117,12 @@ public class Ollama extends ApiUtilities {
         this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
         this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
         this.defaultModel = defaultModel;
-        ollamaServices = new ServiceGenerator()
-                .setBASE_URL(baseUrl)
-                .setReadTimeout(readTimeout)
-                .setRequestLogging(logsRequests)
-                .generate(OllamaServices.class);
+        ollamaServices = new ServiceGenerator.Builder()
+                .baseUrl(baseUrl)
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
+                .printHeaders(logsRequests)
+                .build(OllamaServices.class);
     }
 
     /**
