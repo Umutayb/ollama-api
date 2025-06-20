@@ -24,6 +24,7 @@ jobs:
         run: |
           echo "
             ollama-token=${{ secrets.OLLAMA_TOKEN }}
+            ollama-base-url=${{ secrets.OLLAMA_BASE_URL }}
           " >> src/test/resources/secret.properties
       - name: Build, Test & Publish
         uses: ncipollo/release-action@v1

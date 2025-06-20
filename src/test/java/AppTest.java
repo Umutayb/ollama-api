@@ -1,9 +1,9 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
 import context.ContextStore;
 import models.Pet;
 import okhttp3.Headers;
 import ollama.Ollama;
 import ollama.models.inference.InferenceModel;
+import org.junit.Before;
 import org.junit.Test;
 import utils.Printer;
 import utils.mapping.MappingUtilities;
@@ -14,18 +14,26 @@ import utils.mapping.MappingUtilities;
 public class AppTest {
 
     Printer log = new Printer(AppTest.class);
+    String baseUrl;
+    Ollama ollama;
+
+    @Before
+    public void before(){
+        ContextStore.loadProperties("test.properties", "secret.properties");
+        baseUrl = ContextStore.get("ollama-base-url");
+        ollama = new Ollama(
+                baseUrl,
+                Headers.of("Authorization", "Bearer " + ContextStore.get("ollama-token"))
+        );
+    }
 
     @Test
-    public void generationTest() throws JsonProcessingException {
-        ContextStore.loadProperties("test.properties", "secret.properties");
-        Ollama ollama = new Ollama(
-                "https://i-bora.com/ollama/",
-                Headers.of("Authorization", "Bearer " + ContextStore.get("ollama-token")));
+    public void dataGenerationTest() {
         InferenceModel prompt = new InferenceModel.Builder()
                 .model("gemma3:27b")
                 .prompt("Create a pet. leave ID null")
                 .build();
         Pet pet = ollama.inference(prompt, Pet.class);
-        log.info(MappingUtilities.Json.getJsonString(pet));;
+        log.info(MappingUtilities.Json.getJsonStringFor(pet));;
     }
 }
