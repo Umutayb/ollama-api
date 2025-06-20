@@ -9,7 +9,7 @@ import utils.Printer;
 import utils.mapping.MappingUtilities;
 
 /**
- * Unit test for simple App.
+ * Unit test.
  */
 public class AppTest {
 
