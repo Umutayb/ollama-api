@@ -3,3 +3,4 @@
 /.mvn/
 /null/
 /out/
+src/test/resources/secret.properties
