@@ -8,8 +8,6 @@ import org.junit.Test;
 import utils.Printer;
 import utils.mapping.MappingUtilities;
 
-import java.util.List;
-
 /**
  * Unit test for simple App.
  */
