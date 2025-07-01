@@ -21,10 +21,7 @@ public class AppTest {
     public void before(){
         ContextStore.loadProperties("test.properties", "secret.properties");
         baseUrl = ContextStore.get("ollama-base-url");
-        ollama = new Ollama(
-                baseUrl,
-                Headers.of("Authorization", "Bearer " + ContextStore.get("ollama-token"))
-        );
+        ollama = new Ollama(baseUrl, ContextStore.get("ollama-token").toString());
     }
 
     @Test

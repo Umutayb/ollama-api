@@ -13,12 +13,11 @@ import static ollama.utilities.Utilities.getSchema;
  *
  * <p> Example usage:
  * <pre>
- * InferenceModel model = new InferenceModel.Builder()
- *         .model("gemma3:27b")
- *         .prompt("Tell me a story.")
- *         .stream(true)
- *         .format("json")
- *         .build();
+ * InferenceModel prompt = new InferenceModel.Builder()
+ *                 .model("gemma3:27b")
+ *                 .prompt("Create a pet. leave ID null")
+ *                 .format(Pet.class)
+ *                 .build();
  * </pre>
  *
  * @author Umut Ay Bora
