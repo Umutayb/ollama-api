@@ -21,7 +21,7 @@ Include the required dependencies in your project:
     <dependency>
         <groupId>io.github.umutayb</groupId>
         <artifactId>ollama-api</artifactId>
-        <version>0.0.5</version>
+        <version>0.0.6</version>
     </dependency>
 </dependencies>
 ```
