@@ -83,6 +83,48 @@ public class Ollama extends WasapiUtilities {
     }
 
     /**
+     * Constructs an instance of {@code Ollama} with a specified base URL and authorization header.
+     *
+     * @param baseUrl         The base URL of the API service.
+     * @param defaultModel     The default model to use for requests.
+     * @param authorisationKey The authorization key to authorise the requests.
+     */
+    public Ollama(String baseUrl, String defaultModel, String authorisationKey) {
+        this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
+        this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
+        this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
+        this.defaultModel = defaultModel;
+        keepLogs(logsRequests);
+        ollamaServices = new WasapiClient.Builder()
+                .baseUrl(baseUrl)
+                .headers(Headers.of("Authorization", "Bearer " + authorisationKey))
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
+                .printHeaders(logsRequests)
+                .build(OllamaServices.class);
+    }
+
+    /**
+     * Constructs an instance of {@code Ollama} with a specified base URL and authorization header.
+     *
+     * @param baseUrl         The base URL of the API service.
+     * @param authorisationKey The authorization key to authorise the requests.
+     */
+    public Ollama(String baseUrl, String authorisationKey) {
+        this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
+        this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
+        this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
+        keepLogs(logsRequests);
+        ollamaServices = new WasapiClient.Builder()
+                .baseUrl(baseUrl)
+                .headers(Headers.of("Authorization", "Bearer " + authorisationKey))
+                .readTimeout(readTimeout)
+                .logRequestBody(logsRequests)
+                .printHeaders(logsRequests)
+                .build(OllamaServices.class);
+    }
+
+    /**
      * Constructs an instance of {@code Ollama} with a specified base URL, a default model, and authorization header.
      *
      * @param baseUrl          The base URL of the API service.
@@ -98,25 +140,6 @@ public class Ollama extends WasapiUtilities {
         ollamaServices = new WasapiClient.Builder()
                 .baseUrl(baseUrl)
                 .headers(authorisationHeader)
-                .readTimeout(readTimeout)
-                .logRequestBody(logsRequests)
-                .printHeaders(logsRequests)
-                .build(OllamaServices.class);
-    }
-
-    /**
-     * Constructs an instance of {@code Ollama} with a specified base URL and a default model.
-     *
-     * @param baseUrl The base URL of the API service.
-     * @param defaultModel To set the default model to be messaged.
-     */
-    public Ollama(String baseUrl, String defaultModel) {
-        this.logsResponses = Boolean.parseBoolean(ContextStore.get("ollama-response-logging", "false"));
-        this.logsRequests = Boolean.parseBoolean(ContextStore.get("ollama-request-logging", "false"));
-        this.readTimeout = Integer.parseInt(ContextStore.get("ollama-response-timeout", "1200"));
-        this.defaultModel = defaultModel;
-        ollamaServices = new WasapiClient.Builder()
-                .baseUrl(baseUrl)
                 .readTimeout(readTimeout)
                 .logRequestBody(logsRequests)
                 .printHeaders(logsRequests)
