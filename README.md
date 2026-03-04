@@ -1,4 +1,4 @@
-# Ollama API
+# Ollama API 🤖
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.umutayb/ollama-api?color=brightgreen&label=ollama-api)](https://mvnrepository.com/artifact/io.github.umutayb/ollama-api/latest)
 
